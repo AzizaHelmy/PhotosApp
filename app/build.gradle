@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.aziza.photosapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.aziza.photosapp"
@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
     buildTypes {
@@ -55,8 +55,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-android-compiler:2.38.1"
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'

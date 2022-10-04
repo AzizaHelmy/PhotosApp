@@ -13,4 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="image_style" >
+        <item name="cornerSize">16dp</item>
+        <item name="cornerFamily">cut</item>
+    </style>
 </resources>
