@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aziza.photosapp.R
 import com.aziza.photosapp.databinding.ItemRvPhotosBinding
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 //class HomeAdapter : ListAdapter<Photo, HomeAdapter.HomeViewHolder>(HomeDiffUtil) {
 
@@ -43,11 +44,11 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
 
         fun bind(photo: Photo) {
             binding.apply {
-                Glide.with(ivPhoto.context)
-                    .load(photo.thumbnailUrl)
-                    // .load("https://rickandmortyapi.com/api/character/avatar/473.jpeg")
-                    .placeholder(R.drawable.img)
-                    .into(ivPhoto)
+//                Glide.with(ivPhoto.context)
+//                    .load(photo.thumbnailUrl)
+//                    .placeholder(R.drawable.img)
+//                    .into(ivPhoto)
+                Picasso.get().load(photo.url).into(ivPhoto)
                 Log.e("TAG", "bind:${photo.url} ")
                 tvTitle.text = photo.title
                 ivPhoto.setOnClickListener {
