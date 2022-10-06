@@ -1,4 +1,8 @@
 package com.aziza.photosapp.data.source.remote
 
-class IRemoteDataSource {
+import com.aziza.photosapp.ui.home.Photo
+import retrofit2.Response
+
+interface IRemoteDataSource {
+    suspend fun getAllPhotos(): Response<List<Photo>>
 }

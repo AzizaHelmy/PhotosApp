@@ -1,6 +1,6 @@
 package com.aziza.photosapp.ui.home
-
 import com.google.gson.annotations.SerializedName
+
 data class Photo(
     @SerializedName("albumId")
     val albumId: Int,

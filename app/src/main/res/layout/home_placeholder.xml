@@ -7,7 +7,7 @@
     android:padding="@dimen/_16sdp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/iv_charcter"
+        android:id="@+id/iv_photo"
         android:layout_width="169dp"
         android:layout_height="114dp"
         android:background="#B3B3B3"
@@ -24,10 +24,10 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_16sdp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_charcter"
+        app:layout_constraintBottom_toBottomOf="@id/iv_photo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_charcter"
-        app:layout_constraintTop_toTopOf="@id/iv_charcter"
+        app:layout_constraintStart_toEndOf="@id/iv_photo"
+        app:layout_constraintTop_toTopOf="@id/iv_photo"
         app:strokeColor="@color/gray"
         app:strokeWidth="1dp">
 
@@ -37,7 +37,7 @@
             android:padding="@dimen/_16sdp">
 
             <View
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@color/gray"

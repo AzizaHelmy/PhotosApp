@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/image_style"
         app:srcCompat="@drawable/img"
-        app:strokeColor="@color/purple_700"
+        app:strokeColor="@color/dark"
         app:strokeWidth="2dp" />
 
     <com.google.android.material.card.MaterialCardView
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_photo"
         app:layout_constraintTop_toTopOf="@id/iv_photo"
-        app:strokeColor="@color/purple_700"
+        app:strokeColor="@color/dark"
         app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/aclonica"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
