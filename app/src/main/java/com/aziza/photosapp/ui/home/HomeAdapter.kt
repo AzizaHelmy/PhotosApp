@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.aziza.photosapp.R
 import com.aziza.photosapp.databinding.ItemRvPhotosBinding
 import com.bumptech.glide.Glide
 
@@ -35,7 +36,6 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
         holder.bind(photos[position])
 
     }
-
     override fun getItemCount(): Int = photos.size
 
     inner class HomeViewHolder(private val binding: ItemRvPhotosBinding) :
@@ -44,9 +44,9 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
         fun bind(photo: Photo) {
             binding.apply {
                 Glide.with(ivPhoto.context)
-                    //.load(photo.thumbnailUrl)
-                    .load("https://rickandmortyapi.com/api/character/avatar/473.jpeg")
-                    // .placeholder(R.drawable.img)
+                    .load(photo.thumbnailUrl)
+                    // .load("https://rickandmortyapi.com/api/character/avatar/473.jpeg")
+                    .placeholder(R.drawable.img)
                     .into(ivPhoto)
                 Log.e("TAG", "bind:${photo.url} ")
                 tvTitle.text = photo.title
@@ -54,12 +54,9 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
                     onClickListener.onPhotoClicked(photo)
                 }
                 layoutHome.setOnClickListener {
-
+                    onClickListener.onItemClicked()
                 }
             }
-
-
         }
-
     }
 }

@@ -65,7 +65,5 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    //ImgFullScr
-    implementation 'com.github.stfalcon-studio:StfalconImageViewer:v1.0.1'
 
 }

@@ -1,25 +1,24 @@
 package com.aziza.photosapp.ui.home
 
-import android.media.Image
+import android.R
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aziza.photosapp.R
 import com.aziza.photosapp.databinding.FragmentHomeBinding
-import com.stfalcon.imageviewer.StfalconImageViewer
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), IHHomeOnClickListener {
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
     private val homeViewModel: HomeViewModel by viewModels()
     private val homeAdapter by lazy {
         HomeAdapter(this)
@@ -34,8 +33,8 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
-        return binding.root
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,10 +46,10 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
     private fun getAllPhoto() {
         homeViewModel.getAllPhoto()
         homeViewModel.photoResult.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 hideShimmerEffect()
                 homeAdapter.setData(it)
-                Log.e("TAG", "getAllPhoto:${it[0].url} " )
+                Log.e("TAG", "getAllPhoto:${it[0].url} ")
             }
 
         }
@@ -58,7 +57,7 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
     }
 
     private fun setUpRecyclerView() {
-        binding.rvHome.apply {
+        _binding!!.rvHome.apply {
             layoutManager = LinearLayoutManager(activity)
             val alphaAdapter = AlphaInAnimationAdapter(homeAdapter)
             val scaleAdapter = ScaleInAnimationAdapter(alphaAdapter).apply {
@@ -71,15 +70,15 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        //binding=null
+        _binding = null
     }
 
     private fun hideShimmerEffect() {
-        binding.shimmerLayout.apply {
+        _binding!!.shimmerLayout.apply {
             visibility = View.GONE
             stopShimmer()
         }
-        binding.rvHome.visibility = View.VISIBLE
+        _binding!!.rvHome.visibility = View.VISIBLE
 
     }
 
@@ -88,28 +87,25 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
     }
 
     override fun onPhotoClicked(photo: Photo) {
-//        StfalconImageViewer.Builder<Image>() { view, image ->
-//            Picasso.get().load(image.url).into(view)
-//        }.show()
+       showZoomableImage(requireContext(), photo.url)
+    }
 
-//        StfalconImageViewer.Builder<String>(requireContext(), photo.url, ::loadImage)
-//           // .withStartPosition(startPosition)
-//            .withBackgroundColor(R.color.purple_500)
-//            //.withBackgroundColorResource(R.color.color)
-//            .withOverlayView(view)
-//            .withImagesMargin(R.dimen.margin)
-//            //.withImageMarginPixels(margin)
-//            .withContainerPadding(R.dimen.padding)
-//            //.withContainerPadding(R.dimen.paddingStart, R.dimen.paddingTop, R.dimen.paddingEnd, R.dimen.paddingBottom)
-//            //.withContainerPaddingPixels(padding)
-//            //.withContainerPaddingPixels(paddingStart, paddingTop, paddingEnd, paddingBottom)
-////            .withHiddenStatusBar(shouldHideStatusBar)
-////            .allowZooming(isZoomingAllowed)
-////            .allowSwipeToDismiss(isSwipeToDismissAllowed)
-////            .withTransitionFrom(targeImageView)
-//            .withImageChangeListener(::onImageChanged)
-//            .withDismissListener(::onViewerDismissed)
-//            .withDismissListener(::onViewerDismissed)
+    private fun showZoomableImage(context: Context, imgUrl: String) {
+        val dialog = Dialog(context, R.style.Theme_DeviceDefault_Light_NoActionBar)
+        dialog.window?.setGravity(Gravity.CENTER)
+        dialog.setCancelable(true)
+        val webView = WebView(context)
+        webView.layoutParams = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.MATCH_PARENT)
+        webView.loadUrl(imgUrl)
+        webView.settings.builtInZoomControls = true
+        webView.settings.setSupportZoom(true)
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.useWideViewPort = true
+        webView.zoomOut()
+        dialog.setContentView(webView)
+        dialog.show()
     }
 }
 
