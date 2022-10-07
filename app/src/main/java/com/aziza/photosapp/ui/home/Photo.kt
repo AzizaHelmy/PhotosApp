@@ -1,4 +1,5 @@
 package com.aziza.photosapp.ui.home
+
 import com.google.gson.annotations.SerializedName
 
 data class Photo(
@@ -12,4 +13,8 @@ data class Photo(
     val title: String,
     @SerializedName("url")
     val url: String
-)
+) : DifferentiableItem {
+    override fun getUniqueIdentifier(): Any = id
+
+    override fun getContent(): String = toString()
+}

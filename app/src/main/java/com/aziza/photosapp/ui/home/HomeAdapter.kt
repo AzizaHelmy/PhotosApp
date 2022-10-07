@@ -1,27 +1,17 @@
 package com.aziza.photosapp.ui.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.aziza.photosapp.R
 import com.aziza.photosapp.databinding.ItemRvPhotosBinding
-import com.bumptech.glide.Glide
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 
-//class HomeAdapter : ListAdapter<Photo, HomeAdapter.HomeViewHolder>(HomeDiffUtil) {
-
 class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
-    RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
-    private var photos: List<Photo> = ArrayList()
+    ListAdapter<Photo, HomeAdapter.HomeViewHolder>(HomeDiffUtil.getInstance()) {
 
-    fun setData(newList: List<Photo>) {
-//        val homeDiffUtil = HomeDiffUtil(photos, newList)
-//        val homeDiffutilResult = DiffUtil.calculateDiff(homeDiffUtil)
-        photos = newList
-        notifyDataSetChanged()
-        //  homeDiffutilResult.dispatchUpdatesTo(this)
-    }
+    private var photos: List<Photo> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         return HomeViewHolder(
@@ -35,21 +25,16 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.bind(photos[position])
-
     }
-    override fun getItemCount(): Int = photos.size
 
     inner class HomeViewHolder(private val binding: ItemRvPhotosBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo) {
             binding.apply {
-//                Glide.with(ivPhoto.context)
-//                    .load(photo.thumbnailUrl)
-//                    .placeholder(R.drawable.img)
-//                    .into(ivPhoto)
-                Picasso.get().load(photo.url).into(ivPhoto)
-                Log.e("TAG", "bind:${photo.url} ")
+                Picasso.get().load(photo.url)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(ivPhoto)
                 tvTitle.text = photo.title
                 ivPhoto.setOnClickListener {
                     onClickListener.onPhotoClicked(photo)
@@ -61,3 +46,4 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
         }
     }
 }
+

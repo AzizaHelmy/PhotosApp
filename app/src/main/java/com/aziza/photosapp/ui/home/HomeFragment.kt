@@ -4,13 +4,13 @@ import android.R
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.aziza.photosapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
@@ -19,6 +19,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 @AndroidEntryPoint
 class HomeFragment : Fragment(), IHHomeOnClickListener {
     private var _binding: FragmentHomeBinding? = null
+    private var currentPage = 1
     private val homeViewModel: HomeViewModel by viewModels()
     private val homeAdapter by lazy {
         HomeAdapter(this)
@@ -48,12 +49,10 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
         homeViewModel.photoResult.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 hideShimmerEffect()
-                homeAdapter.setData(it)
-                Log.e("TAG", "getAllPhoto:${it[0].url} ")
+               // homeAdapter.setData(it)
+                homeAdapter.submitList(it)
             }
-
         }
-
     }
 
     private fun setUpRecyclerView() {
@@ -64,6 +63,20 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
                 setDuration(500)
                 setFirstOnly(false)
             }
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (!recyclerView.canScrollVertically(1)) {
+                        val totalPages= 10
+                        if (currentPage !== totalPages) {
+                            Toast.makeText(context, currentPage.toString() + "", Toast.LENGTH_SHORT)
+                                .show()
+                          //  getAllResult(++currentPage)
+                            getAllPhoto()
+                        }
+                    }
+                }
+            })
             adapter = scaleAdapter
         }
     }
@@ -87,7 +100,7 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
     }
 
     override fun onPhotoClicked(photo: Photo) {
-       showZoomableImage(requireContext(), photo.url)
+        showZoomableImage(requireContext(), photo.url)
     }
 
     private fun showZoomableImage(context: Context, imgUrl: String) {
@@ -97,7 +110,8 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
         val webView = WebView(context)
         webView.layoutParams = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.MATCH_PARENT)
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
         webView.loadUrl(imgUrl)
         webView.settings.builtInZoomControls = true
         webView.settings.setSupportZoom(true)
