@@ -20,10 +20,18 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 class HomeFragment : Fragment(), IHomeOnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private var currentPage = 1
+    private var count = 0;
     private val homeViewModel: HomeViewModel by viewModels()
     private val homeAdapter by lazy {
         HomeAdapter(this)
     }
+    private var isLoading = true
+    private var pageNumber = 1
+    private var itemCount = 20
+    private var previousTotal = 0
+    private var visibleItemCount = 0
+    private var totalItemCount = 0
+    private var pastVisibleItem = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +52,7 @@ class HomeFragment : Fragment(), IHomeOnClickListener {
         setUpRecyclerView()
     }
 
-    private fun getPhotosByAlbumId(albumId:Int) {
+    private fun getPhotosByAlbumId(albumId: Int) {
         homeViewModel.getPhotosByAlbumId(albumId)
         homeViewModel.photoResult.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
@@ -65,15 +73,25 @@ class HomeFragment : Fragment(), IHomeOnClickListener {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
+
                     if (!recyclerView.canScrollVertically(1)) {
-                        val totalPages= 100
-                        if (currentPage !== totalPages) {
+                        val totalPages = 100//(list size/items per page) 
+                        if (currentPage != totalPages) {
                             Toast.makeText(context, currentPage.toString() + "", Toast.LENGTH_SHORT)
                                 .show()
-                           getPhotosByAlbumId(++currentPage)
+                            getPhotosByAlbumId(++currentPage)
                         }
                     }
                 }
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy)
+//                    if (scrollY == recyclerView.getChildAt(0).measuredHeight - recyclerView.getMeasuredHeight()) {
+//                        count++
+//                        if (count < 10) {
+//                           getPhotosByAlbumId(currentPage)
+//                        }
+//                    }
+//                }
             })
             adapter = scaleAdapter
         }

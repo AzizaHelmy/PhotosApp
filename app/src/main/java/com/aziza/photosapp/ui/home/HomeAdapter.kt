@@ -11,8 +11,6 @@ import com.squareup.picasso.Picasso
 class HomeAdapter(val onClickListener: IHomeOnClickListener) :
     ListAdapter<Photo, HomeAdapter.HomeViewHolder>(HomeDiffUtil.getInstance()) {
 
-    private var photos: List<Photo> = ArrayList()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         return HomeViewHolder(
             ItemRvPhotosBinding.inflate(
@@ -32,9 +30,7 @@ class HomeAdapter(val onClickListener: IHomeOnClickListener) :
 
         fun bind(photo: Photo) {
             binding.apply {
-                Picasso.get().load(photo.url)
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .into(ivPhoto)
+                Picasso.get().load(photo.url).networkPolicy(NetworkPolicy.OFFLINE).into(ivPhoto)
                 tvTitle.text = photo.title
                 ivPhoto.setOnClickListener {
                     onClickListener.onPhotoClicked(photo)
