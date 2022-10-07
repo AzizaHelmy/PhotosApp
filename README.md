@@ -8,6 +8,7 @@
 - [x] Single Activity Concept
 - [x] Using Material Components
 - [x] using List Adapter "D 
+- [x] DiffUtil
 - [x] Image Zoom
 
  ## Demo
