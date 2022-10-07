@@ -8,7 +8,7 @@
 - [x] View Binding
 - [x] Single Activity Concept
 - [x] Using Material Components
-- [x] using List Adapter "D 
+- [x] Using List Adapter  
 - [x] DiffUtil
 - [x] Image Zoom
 
