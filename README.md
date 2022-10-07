@@ -3,6 +3,7 @@
  
 - [x] Kotlin
 - [x] MVVM
+- [x] DI->Hilt
 - [x] manual Pagination
 - [x] View Binding
 - [x] Single Activity Concept
