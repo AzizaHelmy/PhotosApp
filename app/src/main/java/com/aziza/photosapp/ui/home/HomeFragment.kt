@@ -40,7 +40,7 @@ class HomeFragment : Fragment(), IHomeOnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getPhotosByAlbumId(1)
+        getPhotosByAlbumId(currentPage)
         setUpRecyclerView()
     }
 
@@ -66,12 +66,11 @@ class HomeFragment : Fragment(), IHomeOnClickListener {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (!recyclerView.canScrollVertically(1)) {
-                        val totalPages= 10
+                        val totalPages= 100
                         if (currentPage !== totalPages) {
                             Toast.makeText(context, currentPage.toString() + "", Toast.LENGTH_SHORT)
                                 .show()
-                          //  getAllResult(++currentPage)
-                            getPhotosByAlbumId(1)
+                           getPhotosByAlbumId(++currentPage)
                         }
                     }
                 }

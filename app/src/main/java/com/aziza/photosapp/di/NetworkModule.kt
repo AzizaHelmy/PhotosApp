@@ -25,8 +25,8 @@ object NetworkModule {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
-//            .readTimeout(15, TimeUnit.SECONDS)
-//            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(3000, TimeUnit.SECONDS)
+            .connectTimeout(3000, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
             .build()
     }
