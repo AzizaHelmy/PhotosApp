@@ -40,12 +40,12 @@ class HomeFragment : Fragment(), IHomeOnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getAllPhoto()
+        getPhotosByAlbumId(1)
         setUpRecyclerView()
     }
 
-    private fun getAllPhoto() {
-        homeViewModel.getAllPhoto()
+    private fun getPhotosByAlbumId(albumId:Int) {
+        homeViewModel.getPhotosByAlbumId(albumId)
         homeViewModel.photoResult.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 hideShimmerEffect()
@@ -71,7 +71,7 @@ class HomeFragment : Fragment(), IHomeOnClickListener {
                             Toast.makeText(context, currentPage.toString() + "", Toast.LENGTH_SHORT)
                                 .show()
                           //  getAllResult(++currentPage)
-                            getAllPhoto()
+                            getPhotosByAlbumId(1)
                         }
                     }
                 }

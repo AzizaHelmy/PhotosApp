@@ -17,8 +17,8 @@ class HomeViewModel @Inject constructor(private val repo: IRepository) : ViewMod
     private val _photoResult= MutableLiveData<List<Photo>>()
     var photoResult: LiveData<List<Photo>> = _photoResult
 
-    fun getAllPhoto() = viewModelScope.launch {
-        val result = repo.getAllPhotos()
+    fun getPhotosByAlbumId(albumId:Int) = viewModelScope.launch {
+        val result = repo.getPhotosByAlbumId(albumId)
         _photoResult.postValue(result.body())
 
     }
