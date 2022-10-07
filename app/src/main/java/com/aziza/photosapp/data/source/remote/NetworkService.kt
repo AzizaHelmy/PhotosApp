@@ -7,4 +7,5 @@ import retrofit2.http.GET
 interface NetworkService {
     @GET("photos")
     suspend fun getAllPhotos():Response<List<Photo>>
+    
 }

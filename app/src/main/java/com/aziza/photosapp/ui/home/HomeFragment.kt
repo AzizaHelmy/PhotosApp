@@ -17,7 +17,7 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), IHHomeOnClickListener {
+class HomeFragment : Fragment(), IHomeOnClickListener {
     private var _binding: FragmentHomeBinding? = null
     private var currentPage = 1
     private val homeViewModel: HomeViewModel by viewModels()
@@ -49,7 +49,6 @@ class HomeFragment : Fragment(), IHHomeOnClickListener {
         homeViewModel.photoResult.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 hideShimmerEffect()
-               // homeAdapter.setData(it)
                 homeAdapter.submitList(it)
             }
         }

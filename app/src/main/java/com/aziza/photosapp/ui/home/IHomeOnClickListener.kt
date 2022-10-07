@@ -1,6 +1,6 @@
 package com.aziza.photosapp.ui.home
 
-interface IHHomeOnClickListener {
+interface IHomeOnClickListener {
 
     fun onItemClicked()
     fun onPhotoClicked(photo: Photo)

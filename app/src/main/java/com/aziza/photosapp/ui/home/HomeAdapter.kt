@@ -8,7 +8,7 @@ import com.aziza.photosapp.databinding.ItemRvPhotosBinding
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 
-class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
+class HomeAdapter(val onClickListener: IHomeOnClickListener) :
     ListAdapter<Photo, HomeAdapter.HomeViewHolder>(HomeDiffUtil.getInstance()) {
 
     private var photos: List<Photo> = ArrayList()
@@ -24,7 +24,7 @@ class HomeAdapter(val onClickListener: IHHomeOnClickListener) :
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        holder.bind(photos[position])
+        holder.bind(getItem(position))
     }
 
     inner class HomeViewHolder(private val binding: ItemRvPhotosBinding) :
